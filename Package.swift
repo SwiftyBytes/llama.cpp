@@ -1,22 +1,16 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.9
+
+//
+// This source file is part of the TemplatePackage open source project
+//
+// SPDX-FileCopyrightText: 2022 Stanford University and the project authors (see CONTRIBUTORS.md)
+//
+// SPDX-License-Identifier: MIT
+//
 
 import PackageDescription
 
-var sources = [
-    "ggml.c",
-    "llama.cpp",
-    "unicode.cpp",
-    "unicode-data.cpp",
-    "ggml-alloc.c",
-    "ggml-backend.c",
-    "ggml-quants.c",
-    "common/common.h",
-    "common/grammer-parser.h",
-    "common/train.h",
-    "common/base64.h",
-    "common/sampling.h",
-    "common/sampling.cpp",
-]
+var sources: [String] = []
 
 var resources: [Resource] = []
 var linkerSettings: [LinkerSetting] = []
@@ -31,7 +25,7 @@ var cSettings: [CSetting] =  [
 ]
 
 #if canImport(Darwin)
-sources.append("ggml-metal.m")
+//sources.append("ggml-metal.m")
 resources.append(.process("ggml-metal.metal"))
 linkerSettings.append(.linkedFramework("Accelerate"))
 cSettings.append(
@@ -46,38 +40,51 @@ cSettings.append(
     cSettings.append(.define("_GNU_SOURCE"))
 #endif
 
+
 let package = Package(
     name: "llama",
     platforms: [
-        .macOS(.v12),
-        .iOS(.v14),
-        .watchOS(.v4),
-        .tvOS(.v14)
+        .iOS(.v17),
+        .visionOS(.v1),
+        .macOS(.v14)
     ],
     products: [
-        .library(name: "llama", targets: ["llama"]),
+        .library(
+            name: "llama",
+            targets: [
+                "llama"
+            ]
+        )
     ],
     targets: [
         .target(
             name: "llama",
             path: ".",
             exclude: [
-               "cmake",
-               "examples",
-               "scripts",
-               "models",
-               "tests",
-               "CMakeLists.txt",
-               "ggml-cuda.cu",
-               "ggml-cuda.h",
-               "Makefile"
+                "cmake",
+                "examples",
+                "scripts",
+                "models",
+                "tests",
+                "CMakeLists.txt",
+                "ggml-cuda.cu",
+                "ggml-cuda.h",
+                "Makefile"
             ],
             sources: sources,
             resources: resources,
+//            publicHeadersPath: "spm-headers",
             publicHeadersPath: "swift",
             cSettings: cSettings,
+            swiftSettings: [
+                .interoperabilityMode(.Cxx),
+            ],
             linkerSettings: linkerSettings
-        )
-    ],
-    cxxLanguageStandard: .cxx11
+        ),
+    ], cxxLanguageStandard: .cxx11
 )
+
+//        .binaryTarget(
+//            name: "llama",
+//            path: "./llama.xcframework"
+//        )
