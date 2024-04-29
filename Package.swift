@@ -10,6 +10,8 @@ var sources = [
     "ggml-alloc.c",
     "ggml-backend.c",
     "ggml-quants.c",
+    "swift/tokenize.cpp",
+    "swift/vector.cpp",
 ]
 
 var resources: [Resource] = []
