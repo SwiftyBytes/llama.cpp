@@ -10,8 +10,7 @@ var sources = [
     "ggml-alloc.c",
     "ggml-backend.c",
     "ggml-quants.c",
-    "swift/tokenize.cpp",
-    "swift/vector.cpp",
+
 ]
 
 var resources: [Resource] = []
@@ -70,7 +69,7 @@ let package = Package(
             ],
             sources: sources,
             resources: resources,
-            publicHeadersPath: "spm-headers",
+            publicHeadersPath: "swift",
             cSettings: cSettings,
             linkerSettings: linkerSettings
         )
