@@ -10,7 +10,9 @@
 
 import PackageDescription
 
-var sources: [String] = []
+var sources: [String] = [
+    "llama.h"
+]
 
 var resources: [Resource] = []
 var linkerSettings: [LinkerSetting] = []
