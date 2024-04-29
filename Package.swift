@@ -10,7 +10,12 @@ var sources = [
     "ggml-alloc.c",
     "ggml-backend.c",
     "ggml-quants.c",
-
+    "common/common.h",
+    "common/grammer-parser.h",
+    "common/train.h",
+    "common/base64.h",
+    "common/sampling.h",
+    "common/sampling.cpp",
 ]
 
 var resources: [Resource] = []
